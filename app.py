@@ -34,7 +34,7 @@ def hello():
  
         if form.validate():
             if not is_invertible(key):
-                flash('Error: {} is not is_invertible.'.format(str(key)))
+                flash('Error: {} is not invertible.'.format(str(key)))
             elif direction == 'encrypt':
                 flash(encryptor(message, key))
             elif direction == 'decrypt':
