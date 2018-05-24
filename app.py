@@ -24,20 +24,23 @@ def hello():
     print(form.errors)
     if request.method == 'POST':
         message = request.form['message']
-        key = request.form['key']
+        key_input = request.form['key']
         direction = request.form['options']
 
+        key = key_formatter(key_input)
+
         print(message)
-        print(key_formatter(key))
+        print(key)
  
         if form.validate():
-            # Save the comment here.
-            if direction == 'encrypt':
+            if not is_invertible(key):
+                flash('Error: {} is not is_invertible.'.format(str(key)))
+            elif direction == 'encrypt':
                 flash(encryptor(message, key))
             elif direction == 'decrypt':
                 flash(decryptor(message, key))
         else:
-            flash('All the form fields are required. ')
+            flash('Error: All the form fields are required.')
  
     return render_template('form.html', form=form)
  
